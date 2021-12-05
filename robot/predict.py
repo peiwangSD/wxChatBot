@@ -4,6 +4,7 @@ import os
 from datetime import datetime
 from transformers import GPT2LMHeadModel
 from transformers import BertTokenizerFast
+from transformers import BertTokenizer
 import torch.nn.functional as F
 
 PAD = '[PAD]'
@@ -56,7 +57,7 @@ def top_k_top_p_filtering(logits, top_k=0, top_p=0.0, filter_value=-float('Inf')
 
 def predict(text, dialog):
     # os.environ["CUDA_VISIBLE_DEVICES"] = "0"
-    tokenizer = BertTokenizerFast(vocab_file=vocab_path, sep_token="[SEP]", pad_token="[PAD]", cls_token="[CLS]", do_lower_case=False, additional_special_tokens=["[AUDI]","[USER]"])
+    tokenizer = BertTokenizer(vocab_file=vocab_path, sep_token="[SEP]", pad_token="[PAD]", cls_token="[CLS]", do_lower_case=False, additional_special_tokens=["[AUDI]","[USER]"])
     model = GPT2LMHeadModel.from_pretrained(model_path)
     model = model.to(device)
     model.eval()
